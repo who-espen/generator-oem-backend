@@ -1,0 +1,49 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>0. Breeding sites v1 <%= country %></h:title>
+    <model>
+      <instance>
+        <data id="OEMBreedingv1_<%= country %>">
+          <meta>
+            <instanceID/>
+          </meta>
+          <StartTime/>
+          <EndTime/>
+          <breedingGPS/>
+          <breedingDistrictName/>
+          <breedingNotes/>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/breedingGPS:label">
+            <value>Breeding site GPS</value>
+          </text>
+          <text id="/data/breedingDistrictName:label">
+            <value>Enter district name</value>
+          </text>
+          <text id="/data/breedingNotes:label">
+            <value>Notes (optional)</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/StartTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="start"/>
+      <bind nodeset="/data/EndTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="end"/>
+      <bind nodeset="/data/breedingGPS" type="geopoint" required="true()"/>
+      <bind nodeset="/data/breedingDistrictName" type="string" required="true()"/>
+      <bind nodeset="/data/breedingNotes" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/data/breedingGPS">
+      <label ref="jr:itext('/data/breedingGPS:label')"/>
+    </input>
+    <input ref="/data/breedingDistrictName">
+      <label ref="jr:itext('/data/breedingDistrictName:label')"/>
+    </input>
+    <input ref="/data/breedingNotes">
+      <label ref="jr:itext('/data/breedingNotes:label')"/>
+    </input>
+  </h:body>
+</h:html>

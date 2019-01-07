@@ -1,0 +1,224 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>3. OEM Diagnostic test results v4 <%= country %></h:title>
+    <model>
+      <instance>
+        <data id="OEMDiagnostictestresultsv4_<%= country %>">
+          <meta>
+            <instanceID/>
+          </meta>
+          <d_StartTime/>
+          <d_EndTime/>
+          <d_RecorderID/>
+          <d_DistrictID/>
+          <d_EUID/>
+          <d_ClusterID/>
+          <d_LabOV162ndTest/>
+          <d_lotnumber/>
+          <d_IDType/>
+          <d_BarcodeID/>
+          <d_GenerateID/>
+          <d_GenerateID2/>
+          <d_LabOV16/>
+          <d_LabOV16Invalid/>
+          <d_Notes/>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/d_RecorderID:label">
+            <value>Enter Recorder ID</value>
+          </text>
+          <text id="/data/d_RecorderID:hint">
+            <value>2 digit code assigned to you</value>
+          </text>
+          <text id="/data/d_RecorderID:requiredMsg">
+            <value></value>
+          </text>
+
+
+          <text id="/data/d_DistrictID:label">
+            <value>Select District</value>
+          </text>
+          <text id="/data/d_DistrictID:option0">
+            <value><%= district %></value>
+          </text>
+          <text id="/data/d_EUID:label">
+            <value>Select EU</value>
+          </text>
+          <text id="/data/d_EUID:option0">
+            <value><%= eu %></value>
+          </text>
+          <text id="/data/d_ClusterID:label">
+            <value>Enter Cluster ID</value>
+          </text>
+
+
+          <text id="/data/d_LabOV162ndTest:label">
+            <value>Is this a second OV16 test?</value>
+          </text>
+          <text id="/data/d_LabOV162ndTest:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/d_LabOV162ndTest:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/d_lotnumber:label">
+            <value>Please enter RDT lot number</value>
+          </text>
+          <text id="/data/d_IDType:label">
+            <value>Does a bar code need to be scanned on the diagnostic test?</value>
+          </text>
+          <text id="/data/d_IDType:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/d_IDType:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/d_BarcodeID:label">
+            <value>Scan barcode now</value>
+          </text>
+          <text id="/data/d_GenerateID:label">
+            <value>Enter unique ID from the diagnostic test (must be entered as AB-ABC-12345 upper case only with dashes)</value>
+          </text>
+          <text id="/data/d_GenerateID2:label">
+            <value>Re-enter the unique ID</value>
+          </text>
+          <text id="/data/d_LabOV16:label">
+            <value>OV16 RDT Results</value>
+          </text>
+          <text id="/data/d_LabOV16:option0">
+            <value>Positive</value>
+          </text>
+          <text id="/data/d_LabOV16:option1">
+            <value>Negative</value>
+          </text>
+          <text id="/data/d_LabOV16:option2">
+            <value>Indeterminate</value>
+          </text>
+          <text id="/data/d_LabOV16:option3">
+            <value>Invalid (including testing errors and insufficient blood)</value>
+          </text>
+          <text id="/data/d_LabOV16:option4">
+            <value>Refused (withdrew consent)</value>
+          </text>
+          <text id="/data/d_LabOV16Invalid:label">
+            <value>Invalid OV16 result details</value>
+          </text>
+
+          <text id="/data/d_Notes:label">
+            <value>Additional notes</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/d_StartTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="start"/>
+      <bind nodeset="/data/d_EndTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="end"/>
+      <bind nodeset="/data/d_RecorderID" type="int" required="true()" maxLength="2" constraint="regex(., '^[0-9]{2}$')" jr:constraintMsg="Invalid. Recorder ID code is 2 numbers long."/>
+
+      <bind nodeset="/data/d_DistrictID" type="select1" required="true()"/>
+      <bind nodeset="/data/d_EUID" type="select1" required="true()"/>
+      <bind nodeset="/data/d_ClusterID" type="int" required="true()" maxLength="3" constraint="regex(., '^[0-9]{3}$')" jr:constraintMsg="Invalid. Cluster ID code is 3 numbers long."/>
+
+      <bind nodeset="/data/d_LabOV162ndTest" type="select1" required="true()"/>
+      <bind nodeset="/data/d_lotnumber" type="string" required="true()"/>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/d_IDType" type="select1" required="true()"/>
+      <bind nodeset="/data/d_BarcodeID" type="barcode" required="true()" relevant="(selected(/data/d_IDType, 'Yes'))"/>
+      <bind nodeset="/data/d_GenerateID" type="string" required="true()" relevant="(selected(/data/d_IDType, 'No'))" constraint="regex(., '^[A-Z]{2}-[A-Z0-9]{3}-[0-9]{5}$')"/>
+      <bind nodeset="/data/d_GenerateID2" type="string" required="true()" relevant="(selected(/data/d_IDType, 'No'))" constraint=".=/data/d_GenerateID"/>
+      <bind nodeset="/data/d_LabOV16" type="select1" required="true()"/> 
+      <bind nodeset="/data/d_LabOV16Invalid" type="string" required="true()" relevant="(selected(/data/d_LabOV16, 'Invalid'))"/>
+
+      <bind nodeset="/data/d_Notes" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/data/d_RecorderID">
+      <label ref="jr:itext('/data/d_RecorderID:label')"/>
+      <hint ref="jr:itext('/data/d_RecorderID:hint')"/>
+    </input>
+
+    <select1 ref="/data/d_DistrictID">
+      <label ref="jr:itext('/data/d_DistrictID:label')"/>
+      <item>
+        <label ref="jr:itext('/data/d_DistrictID:option0')"/>
+        <value><%= district %>; <%= districtId %></value>
+      </item>
+    </select1>
+    <select1 ref="/data/d_EUID">
+      <label ref="jr:itext('/data/d_EUID:label')"/>
+      <item>
+        <label ref="jr:itext('/data/d_EUID:option0')"/>
+        <value><%= eu %></value>
+      </item>
+    </select1>
+    <input ref="/data/d_ClusterID">
+      <label ref="jr:itext('/data/d_ClusterID:label')"/>
+    </input>
+
+     <select1 ref="/data/d_LabOV162ndTest">
+      <label ref="jr:itext('/data/d_LabOV162ndTest:label')"/>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV162ndTest:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV162ndTest:option1')"/>
+        <value>No</value>
+      </item>
+    </select1>
+    
+    <input ref="/data/d_lotnumber">
+      <label ref="jr:itext('/data/d_lotnumber:label')"/>
+    </input>
+    <select1 ref="/data/d_IDType">
+      <label ref="jr:itext('/data/d_IDType:label')"/>
+      <item>
+        <label ref="jr:itext('/data/d_IDType:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_IDType:option1')"/>
+        <value>No</value>
+      </item>
+    </select1>
+    <input ref="/data/d_BarcodeID">
+      <label ref="jr:itext('/data/d_BarcodeID:label')"/>
+    </input>
+    <input ref="/data/d_GenerateID">
+      <label ref="jr:itext('/data/d_GenerateID:label')"/>
+    </input>
+    <input ref="/data/d_GenerateID2">
+      <label ref="jr:itext('/data/d_GenerateID2:label')"/>
+    </input>
+    <select1 ref="/data/d_LabOV16">
+      <label ref="jr:itext('/data/d_LabOV16:label')"/>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV16:option0')"/>
+        <value>Positive</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV16:option1')"/>
+        <value>Negative</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV16:option2')"/>
+        <value>Indeterminate</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV16:option3')"/>
+        <value>Invalid</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/d_LabOV16:option4')"/>
+        <value>Refused</value>
+      </item>
+    </select1>
+    <input ref="/data/d_LabOV16Invalid">
+      <label ref="jr:itext('/data/d_LabOV16Invalid:label')"/>
+    </input>
+    <input ref="/data/d_Notes">
+      <label ref="jr:itext('/data/d_Notes:label')"/>
+    </input>
+  </h:body>
+</h:html>

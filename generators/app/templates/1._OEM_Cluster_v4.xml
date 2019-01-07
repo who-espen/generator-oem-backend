@@ -1,0 +1,148 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>1. OEM Cluster v4 <%= country %></h:title>
+    <model>
+      <instance>
+        <data id="OEMClusterv4_<%= country %>">
+          <meta>
+            <instanceID/>
+          </meta>
+          <c_StartTime/>
+          <c_EndTime/>
+          <c_RecorderID/>
+          <c_DistrictID/>
+          <c_EU/>
+          <c_ClusterID1/>
+          <c_ClusterID2/>
+          <c_GPS/>
+          <c_VillagePop/>
+          <c_BlackFly/>
+          <c_ClusterNotes/>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/c_RecorderID:label">
+            <value>Enter Recorder ID</value>
+          </text>
+          <text id="/data/c_RecorderID:hint">
+            <value>2 digit code assigned to you</value>
+          </text>
+          <text id="/data/c_RecorderID:requiredMsg">
+            <value></value>
+          </text>
+          <text id="/data/c_DistrictID:label">
+            <value>Select District</value>
+          </text>
+          <text id="/data/c_DistrictID:option0">
+            <value><%= district %></value>
+          </text>
+          <text id="/data/c_EU:label">
+            <value>Select EU</value>
+          </text>
+          <text id="/data/c_EU:option0">
+            <value><%= eu %></value>
+          </text>
+          <text id="/data/c_ClusterID1:label">
+            <value>Enter Cluster ID</value>
+          </text>
+          <text id="/data/c_ClusterID2:label">
+            <value>Enter Cluster ID again</value>
+          </text>
+          <text id="/data/c_GPS:label">
+            <value>Collect GPS data</value>
+          </text>
+          <text id="/data/c_GPS:hint">
+            <value>Works best outside of buildings</value>
+          </text>
+          <text id="/data/c_VillagePop:label">
+            <value>Enter the total population of the village (cluster)</value>
+          </text>
+          <text id="/data/c_VillagePop:hint">
+            <value>Please obtain this information from the community MDA register</value>
+          </text>
+          <text id="/data/c_BlackFly:label">
+            <value>Can local leaders confirm the presence of biting black flies in or near the community?</value>
+          </text>
+          <text id="/data/c_BlackFly:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/c_BlackFly:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/c_BlackFly:option2">
+            <value>Don't know</value>
+          </text>
+          <text id="/data/c_ClusterNotes:label">
+            <value>Additional notes to add?</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/c_StartTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="start"/>
+      <bind nodeset="/data/c_EndTime" type="dateTime" jr:preload="timestamp" jr:preloadParams="end"/>
+      <bind nodeset="/data/c_RecorderID" type="int" required="true()" maxLength="2" constraint="regex(., '^[0-9]{2}$')" jr:constraintMsg="Invalid. Recorder ID code is 2 numbers long."/>
+      <bind nodeset="/data/c_DistrictID" type="select1" required="true()" db_add_col_1="."/>
+      <bind nodeset="/data/c_EU" type="select1" required="true()" db_add_col_1="/data/c_DistrictID" db_add_col_2="."/>
+      <bind nodeset="/data/c_ClusterID1" type="int" required="true()" maxLength="3" constraint="regex(., '^[0-9]{3}$')" jr:constraintMsg="Invalid. Cluster ID code is 3 numbers long."/>
+      <bind nodeset="/data/c_ClusterID2" type="int" required="true()" maxLength="3" constraint=". =/data/c_ClusterID1" db_add_col_1="/data/c_DistrictID" db_add_col_2="/data/c_EU" db_add_col_3="."/>
+      <bind nodeset="/data/c_GPS" type="geopoint" required="true()"/>
+      <bind nodeset="/data/c_VillagePop" type="int" required="true()"/>
+      <bind nodeset="/data/c_BlackFly" type="select1" required="true()"/>
+      <bind nodeset="/data/c_ClusterNotes" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/data/c_RecorderID">
+      <label ref="jr:itext('/data/c_RecorderID:label')"/>
+      <hint ref="jr:itext('/data/c_RecorderID:hint')"/>
+    </input>
+    <select1 ref="/data/c_DistrictID">
+      <label ref="jr:itext('/data/c_DistrictID:label')"/>
+      <item>
+        <label ref="jr:itext('/data/c_DistrictID:option0')"/>
+        <value><%= district %>; <%= districtId %></value>
+      </item>
+    </select1>
+    <select1 ref="/data/c_EU">
+      <label ref="jr:itext('/data/c_EU:label')"/>
+      <item>
+        <label ref="jr:itext('/data/c_EU:option0')"/>
+        <value><%= eu %></value>
+      </item>
+    </select1>
+
+    <input ref="/data/c_ClusterID1">
+      <label ref="jr:itext('/data/c_ClusterID1:label')"/>
+    </input>
+    <input ref="/data/c_ClusterID2">
+      <label ref="jr:itext('/data/c_ClusterID2:label')"/>
+    </input>
+    <input ref="/data/c_GPS">
+      <label ref="jr:itext('/data/c_GPS:label')"/>
+      <hint ref="jr:itext('/data/c_GPS:hint')"/>
+    </input>
+    <input ref="/data/c_VillagePop">
+      <label ref="jr:itext('/data/c_VillagePop:label')"/>
+      <hint ref="jr:itext('/data/c_VillagePop:hint')"/>
+    </input>
+    <select1 ref="/data/c_BlackFly">
+      <label ref="jr:itext('/data/c_BlackFly:label')"/>
+      <item>
+        <label ref="jr:itext('/data/c_BlackFly:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/c_BlackFly:option1')"/>
+        <value>No</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/c_BlackFly:option2')"/>
+        <value>DontKnow</value>
+      </item>
+    </select1>
+    <input ref="/data/c_ClusterNotes">
+      <label ref="jr:itext('/data/c_ClusterNotes:label')"/>
+    </input>
+  </h:body>
+</h:html>

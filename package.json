@@ -1,0 +1,45 @@
+{
+  "name": "generator-oem-backend",
+  "version": "0.1.0",
+  "description": "Yeoman generator for creating a new OEM project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/dyesseyumba/generator-oem-backend.git"
+  },
+  "author": "Dyesse YUMBA <yumba.nduba@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/dyesseyumba/generator-oem-backend/issues"
+  },
+  "homepage": "https://gitlab.com/dyesseyumba/generator-oem-backend#readme",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "sql",
+    "xform",
+    "oem"
+  ],
+  "scripts": {
+    "lint": "esw --color"
+  },
+  "dependencies": {
+    "eslint": "^5.12.0",
+    "eslint-watch": "^4.0.2",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.0",
+    "yeoman-generator": "^3.2.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "esw  --color",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

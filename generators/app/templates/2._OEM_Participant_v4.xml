@@ -1,0 +1,268 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>2. OEM Participant v4 <%= country %></h:title>
+    <model>
+      <instance>
+        <data id="OEMParticipantv4_<%= country %>">
+          <meta>
+            <instanceID/>
+            <randomnum/>
+          </meta>
+          <p_RecorderID/>
+          <p_DistrictID/>
+          <p_EUID/>
+          <p_ClusterID/>
+          <p_Consent/>
+          <p_HowLongLived/>
+          <p_Sex/>
+          <p_AgeYrs/>
+          <p_Travel/>
+          <p_IVM/>
+          <p_IVMWhere/>
+          <p_IDMethod/>
+          <p_BarcodeID/>
+          <p_GenerateID/>
+          <p_AdditionalNotes/>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/p_RecorderID:label">
+            <value>Enter Recorder ID</value>
+          </text>
+          <text id="/data/p_RecorderID:hint">
+            <value>2 digit code assigned to you</value>
+          </text>
+          <text id="/data/p_DistrictID:label">
+            <value>Select District</value>
+          </text>
+          <text id="/data/p_DistrictID:hint">
+            <value></value>
+          </text>
+          <text id="/data/p_EUID:label">
+            <value>Select EU</value>
+          </text>
+          <text id="/data/p_ClusterID:label">
+            <value>Select Cluster</value>
+          </text>
+          <text id="/data/p_Consent:label">
+            <value>Does respondent provide consent?</value>
+          </text>
+          <text id="/data/p_Consent:hint">
+            <value>No response will end survey</value>
+          </text>
+          <text id="/data/p_Consent:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/p_Consent:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/p_HowLongLived:label">
+            <value>How many years has the respondent lived in the area?</value>
+          </text>
+          <text id="/data/p_HowLongLived:hint">
+            <value>Less than 10 years will end survey</value>
+          </text>
+          <text id="/data/p_Sex:label">
+            <value>Sex of respondent</value>
+          </text>
+          <text id="/data/p_Sex:option0">
+            <value>Female</value>
+          </text>
+          <text id="/data/p_Sex:option1">
+            <value>Male</value>
+          </text>
+          <text id="/data/p_AgeYrs:label">
+            <value>Enter age in years</value>
+          </text>
+          <text id="/data/p_AgeYrs:hint">
+            <value>Less than 20 years old will end survey</value>
+          </text>
+          <text id="/data/p_Travel:label">
+            <value>Do you frequently travel long distances from this village?</value>
+          </text>
+          <text id="/data/p_Travel:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/p_Travel:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/p_IVM:label">
+            <value>Have you taken Ivermectin in the past 12 months?</value>
+          </text>
+          <text id="/data/p_IVM:option0">
+            <value>Yes</value>
+          </text>
+          <text id="/data/p_IVM:option1">
+            <value>No</value>
+          </text>
+          <text id="/data/p_IVM:option2">
+            <value>Don't know</value>
+          </text>
+          <text id="/data/p_IVMWhere:label">
+            <value>If Yes, where were you given Ivermectin?</value>
+          </text>
+          <text id="/data/p_IVMWhere:option0">
+            <value>In this village, as part of a mass treatment campaign</value>
+          </text>
+          <text id="/data/p_IVMWhere:option1">
+            <value>In this village, local clinic or pharmacy</value>
+          </text>
+          <text id="/data/p_IVMWhere:option2">
+            <value>In another village, as part of mass treatment campaign</value>
+          </text>
+          <text id="/data/p_IVMWhere:option3">
+            <value>In another village, local clinic or pharmacy</value>
+          </text>
+          <text id="/data/p_IDMethod:label">
+            <value>How will the individual's unique ID be generated?</value>
+          </text>
+          <text id="/data/p_IDMethod:option0">
+            <value>Scanner</value>
+          </text>
+          <text id="/data/p_IDMethod:option1">
+            <value>automatic ID generation</value>
+          </text>
+          <text id="/data/p_BarcodeID:label">
+            <value>Scan barcode now</value>
+          </text>
+          <text id="/data/p_GenerateID:label">
+            <value>Please record the following unique ID code for the respondent on a separate list and on each diagnostic test(s) adminstered, including OV16 RDT and Dry Blood Spot tests.</value>
+          </text>
+          <text id="/data/p_AdditionalNotes:label">
+            <value>Additional notes</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/meta/randomnum" type="string" calculate="substr(random(),3,8)"/>
+      <bind nodeset="/data/p_RecorderID" type="int" required="true()" maxLength="2" constraint="regex(., '^[0-9]{2}$')" jr:constraintMsg="Invalid. Recorder ID code is 2 numbers long."/>
+      <bind nodeset="/data/p_DistrictID" type="string" required="true()" db_get="col_1"/>
+      <bind nodeset="/data/p_EUID" type="string" required="true()" db_get="col_2" db_filter_by_col_1="/data/p_DistrictID"/>
+      <bind nodeset="/data/p_ClusterID" type="string" required="true()" db_get="col_3" db_filter_by_col_2="/data/p_EUID" db_filter_by_col_1="/data/p_DistrictID"/>
+      <bind nodeset="/data/p_Consent" type="select1" required="true()"/>
+      <bind nodeset="/data/p_HowLongLived" type="int" relevant="(selected(/data/p_Consent, 'Yes'))"/>
+      <bind nodeset="/data/p_Sex" type="select1" required="true()"  relevant="/data/p_HowLongLived > 9"/>
+      <bind nodeset="/data/p_AgeYrs" type="int" required="true()"  relevant="/data/p_HowLongLived > 9"/>
+      <bind nodeset="/data/p_Travel" type="select1" required="true()"  relevant="/data/p_AgeYrs > 19"/>
+      <bind nodeset="/data/p_IVM" type="select1" required="true()" relevant="/data/p_AgeYrs > 19"/>
+      <bind nodeset="/data/p_IVMWhere" type="select1" required="true()" relevant="(selected(/data/p_IVM, 'Yes'))"/>
+      <bind nodeset="/data/p_IDMethod" type="select1" required="true()"  relevant="/data/p_AgeYrs > 19"/>
+      <bind nodeset="/data/p_BarcodeID" type="barcode" required="true()" relevant="(selected(/data/p_IDMethod, 'Scanner'))"/>
+      <bind nodeset="/data/p_GenerateID" type="string" required="true()" readonly="true()" relevant="(selected(/data/p_IDMethod, 'IDGeneration'))" calculate="concat('NW', '-', /data/p_EUID, '-', /data/meta/randomnum)"/>
+      <bind nodeset="/data/p_AdditionalNotes" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/data/p_RecorderID">
+      <label ref="jr:itext('/data/p_RecorderID:label')"/>
+      <hint ref="jr:itext('/data/p_RecorderID:hint')"/>
+    </input>
+    <input ref="/data/p_DistrictID">
+      <label ref="jr:itext('/data/p_DistrictID:label')"/>
+      <hint ref="jr:itext('/data/p_DistrictID:hint')"/>
+    </input>
+    <input ref="/data/p_EUID">
+      <label ref="jr:itext('/data/p_EUID:label')"/>
+    </input>
+    <input ref="/data/p_ClusterID">
+      <label ref="jr:itext('/data/p_ClusterID:label')"/>
+    </input>
+    <select1 ref="/data/p_Consent">
+      <label ref="jr:itext('/data/p_Consent:label')"/>
+      <hint ref="jr:itext('/data/p_Consent:hint')"/>
+      <item>
+        <label ref="jr:itext('/data/p_Consent:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_Consent:option1')"/>
+        <value>No</value>
+      </item>
+    </select1>
+    <input ref="/data/p_HowLongLived">
+      <label ref="jr:itext('/data/p_HowLongLived:label')"/>
+      <hint ref="jr:itext('/data/p_HowLongLived:hint')"/>
+    </input>
+    <select1 ref="/data/p_Sex">
+      <label ref="jr:itext('/data/p_Sex:label')"/>
+      <item>
+        <label ref="jr:itext('/data/p_Sex:option0')"/>
+        <value>Female</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_Sex:option1')"/>
+        <value>Male</value>
+      </item>
+    </select1>
+    <input ref="/data/p_AgeYrs">
+      <label ref="jr:itext('/data/p_AgeYrs:label')"/>
+      <hint ref="jr:itext('/data/p_AgeYrs:hint')"/>
+    </input>
+    <select1 ref="/data/p_Travel">
+      <label ref="jr:itext('/data/p_Travel:label')"/>
+      <item>
+        <label ref="jr:itext('/data/p_Travel:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_Travel:option1')"/>
+        <value>No</value>
+      </item>
+    </select1>
+    <select1 ref="/data/p_IVM">
+      <label ref="jr:itext('/data/p_IVM:label')"/>
+      <item>
+        <label ref="jr:itext('/data/p_IVM:option0')"/>
+        <value>Yes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IVM:option1')"/>
+        <value>No</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IVM:option2')"/>
+        <value>DontKnow</value>
+      </item>
+    </select1>
+    <select1 ref="/data/p_IVMWhere">
+      <label ref="jr:itext('/data/p_IVMWhere:label')"/>
+      <item>
+        <label ref="jr:itext('/data/p_IVMWhere:option0')"/>
+        <value>ThisVillageMDA</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IVMWhere:option1')"/>
+        <value>ThisVillageClinic</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IVMWhere:option2')"/>
+        <value>AnotherVillageMDA</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IVMWhere:option3')"/>
+        <value>AnotherVillageClinic</value>
+      </item>
+    </select1>
+    <select1 ref="/data/p_IDMethod">
+      <label ref="jr:itext('/data/p_IDMethod:label')"/>
+      <item>
+        <label ref="jr:itext('/data/p_IDMethod:option0')"/>
+        <value>Scanner</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/p_IDMethod:option1')"/>
+        <value>IDGeneration</value>
+      </item>
+    </select1>
+    <input ref="/data/p_BarcodeID">
+      <label ref="jr:itext('/data/p_BarcodeID:label')"/>
+    </input>
+    <input ref="/data/p_GenerateID">
+      <label ref="jr:itext('/data/p_GenerateID:label')"/>
+    </input>
+    <input ref="/data/p_AdditionalNotes">
+      <label ref="jr:itext('/data/p_AdditionalNotes:label')"/>
+    </input>
+  </h:body>
+</h:html>
