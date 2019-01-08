@@ -3,11 +3,11 @@ CREATE VIEW oemparticipantv<%= xformVersion %>_<%= country %> AS
 SELECT
   id,
   p_recorder_id,
-  r."RecorderName",
+  r."RecorderName" p_recorder_name,
   p_district_id,
   p_euid,
   p_cluster_id,
-  c."ClusterName",
+  c."ClusterName" p_cluster_name,
   p_consent,
   p_how_long_lived,
   p_sex,
