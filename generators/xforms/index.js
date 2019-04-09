@@ -41,7 +41,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copyTpl(this.templatePath('**'), this.destinationPath(), {
+    this.fs.copyTpl(this.templatePath('../../app/templates/xforms/**'), this.destinationPath(), {
       country: this.country,
       eu: this.eu,
       xformVersion: this.xformVersion,
