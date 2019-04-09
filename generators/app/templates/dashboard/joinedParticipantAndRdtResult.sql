@@ -1,1 +1,1 @@
-SELECT * FROM public.oemclusterv4_ale
+SELECT * FROM public.oemclusterv<%= xformVersion %>_<%= country %>

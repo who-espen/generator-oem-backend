@@ -1,1 +1,1 @@
-SELECT * FROM public.oemparticipantv4_ale
+SELECT * FROM public.oemparticipantv<%= xformVersion %>_<%= country %>
