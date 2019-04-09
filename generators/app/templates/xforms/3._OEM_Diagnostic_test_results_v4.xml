@@ -1,9 +1,9 @@
 <h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
   <h:head>
-    <h:title>3. OEM Diagnostic test results v4 <%= country %></h:title>
+    <h:title>3. OEM Diagnostic test results v<%= xformVersion %> <%= country %></h:title>
     <model>
       <instance>
-        <data id="OEMDiagnostictestresultsv4_<%= country %>">
+        <data id="OEMDiagnostictestresultsv<%= xformVersion %>_<%= country %>">
           <meta>
             <instanceID/>
           </meta>
@@ -126,7 +126,7 @@
       <bind nodeset="/data/d_BarcodeID" type="barcode" required="true()" relevant="(selected(/data/d_IDType, 'Yes'))"/>
       <bind nodeset="/data/d_GenerateID" type="string" required="true()" relevant="(selected(/data/d_IDType, 'No'))" constraint="regex(., '^[A-Z]{2}-[A-Z0-9]{3}-[0-9]{5}$')"/>
       <bind nodeset="/data/d_GenerateID2" type="string" required="true()" relevant="(selected(/data/d_IDType, 'No'))" constraint=".=/data/d_GenerateID"/>
-      <bind nodeset="/data/d_LabOV16" type="select1" required="true()"/> 
+      <bind nodeset="/data/d_LabOV16" type="select1" required="true()"/>
       <bind nodeset="/data/d_LabOV16Invalid" type="string" required="true()" relevant="(selected(/data/d_LabOV16, 'Invalid'))"/>
 
       <bind nodeset="/data/d_Notes" type="string"/>
@@ -167,7 +167,7 @@
         <value>No</value>
       </item>
     </select1>
-    
+
     <input ref="/data/d_lotnumber">
       <label ref="jr:itext('/data/d_lotnumber:label')"/>
     </input>

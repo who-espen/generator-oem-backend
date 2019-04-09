@@ -1,9 +1,9 @@
 <h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
   <h:head>
-    <h:title>2. OEM Participant v4 <%= country %></h:title>
+    <h:title>2. OEM Participant v<%= xformVersion %> <%= country %></h:title>
     <model>
       <instance>
-        <data id="OEMParticipantv4_<%= country %>">
+        <data id="OEMParticipantv<%= xformVersion %>_<%= country %>">
           <meta>
             <instanceID/>
             <randomnum/>
